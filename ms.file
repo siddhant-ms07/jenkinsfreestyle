@@ -1,1 +1,39 @@
-"Face the failure, until the failure fails to face you"
+pipeline {
+    agent any
+    stages {
+        stage("tomcat-server") {
+            steps {
+                script {
+                    // Download and extract Apache Tomcat
+                    sh '''
+                     wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.99/bin/apache-tomcat-8.5.99.tar.gz
+                     tar -xvzf apache-tomcat-8.5.99.tar.gz
+                    '''
+                }
+            }
+        }
+
+        stage("checkout") {
+            steps {
+                script {
+                    // Clone the webapp repository
+                    sh '''
+                  git clone https://github.com/Mayur2905/webapp
+                    '''
+                }
+            }
+        }
+
+        stage("deploy") {
+            steps {
+                script {
+                    // Copy the WAR file to Tomcat webapps directory
+                    sh '''
+                     cp -r ./webapp/student.war ./apache-tomcat-8.5.99/webapps
+                     ./apache-tomcat-8.5.99/bin/catalina.sh start
+                    '''
+                }
+            }
+        }
+    }
+}
