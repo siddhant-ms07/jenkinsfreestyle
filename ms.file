@@ -18,7 +18,7 @@ pipeline {
                 script {
                     // Clone the webapp repository
                     sh '''
-                  git clone https://github.com/Mayur2905/webapp
+                  git clone https://github.com/siddhant-ms07/sid-repo.git
                     '''
                 }
             }
